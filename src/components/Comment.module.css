@@ -11,12 +11,6 @@ flex-basis: 0 -> A propriedade flex-basis define o tamanho inicial dos elementos
   gap: 1rem;
 }
 
-.comment > img {
-  width: 3rem;
-  height: 3rem;
-  border-radius: 8px;
-}
-
 .commentBox {
   flex: 1;
 }
