@@ -33,7 +33,7 @@ const posts = [
       avatarUrl:
         "https://media-exp1.licdn.com/dms/image/D4D03AQGlaQp9lHLS3Q/profile-displayphoto-shrink_800_800/0/1664318948602?e=1669852800&v=beta&t=pgaSVYuQY3UX4TcsZOjA5yusq5ptRWjXM8uT1IjOjSc",
       name: "Rafael Ferreira",
-      role: "Web Developer",
+      role: "CTO @R&R Smart Project",
     },
     content: [
       { type: "paragraph", content: "Fala galera 👋" },
@@ -59,9 +59,9 @@ export function App() {
           {posts.map((post) => {
             return (
               <Post
-                author={posts.author}
-                content={posts.content}
-                publishedAt={posts.publishedAt}
+                author={post.author}
+                content={post.content}
+                publishedAt={post.publishedAt}
               />
             );
           })}
