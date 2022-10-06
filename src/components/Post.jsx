@@ -34,6 +34,14 @@ export function Post({ author, content, publishedAt }) {
     setNewCommentText(event.target.value);
   }
 
+  //utilizando imutabilidade, retorna todos os comentários que forem diferente do 'commentToDelete' e cria uma nova lista; um novo valor da lista.
+  function deleteComment(commentToDelete) {
+    const commentsWithoutDelete = comments.filter((comment) => {
+      return comment !== commentToDelete;
+    });
+    setComments(commentsWithoutDelete);
+  }
+
   return (
     <article className={styles.post}>
       <header>
@@ -54,10 +62,10 @@ export function Post({ author, content, publishedAt }) {
       <main className={styles.content}>
         {content.map((line) => {
           if (line.type === "paragraph") {
-            return <p>{line.content}</p>;
+            return <p key={line.content}>{line.content}</p>;
           } else if (line.type === "link") {
             return (
-              <p>
+              <p key={line.content}>
                 <a>{line.content}</a>
               </p>
             );
@@ -79,7 +87,13 @@ export function Post({ author, content, publishedAt }) {
 
       <div className={styles.commentList}>
         {comments.map((comment) => {
-          return <Comment content={comment} />;
+          return (
+            <Comment
+              key={comment}
+              content={comment}
+              onDeleteComment={deleteComment}
+            />
+          );
         })}
       </div>
     </article>
