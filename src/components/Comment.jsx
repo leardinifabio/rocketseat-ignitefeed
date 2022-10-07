@@ -6,8 +6,11 @@ import styles from "./Comment.module.css";
 export function Comment({ content, onDeleteComment }) {
   const [likeCount, setLikeCount] = useState(0);
 
+  //Sempre que precisar atualizar uma variavel que precisa charmar ela mesmo, utilizar metodo abaixo (boa prática)
   function handleLikeComment() {
-    setLikeCount(likeCount + 1);
+    setLikeCount((state) => {
+      return state + 1;
+    });
   }
 
   function handleDeleteComment() {
