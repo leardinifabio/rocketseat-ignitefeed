@@ -31,7 +31,12 @@ export function Post({ author, content, publishedAt }) {
   }
 
   function handleNewCommentChange() {
+    event.target.setCustomValidity("");
     setNewCommentText(event.target.value);
+  }
+
+  function handleNewCommentinvalid() {
+    event.target.setCustomValidity("Esse campo é obrigatório!");
   }
 
   //utilizando imutabilidade, retorna todos os comentários que forem diferente do 'commentToDelete' e cria uma nova lista; um novo valor da lista.
@@ -41,6 +46,9 @@ export function Post({ author, content, publishedAt }) {
     });
     setComments(commentsWithoutDelete);
   }
+
+  //Aplicando metodologia clean code. Auxilia quem for dar manutenção no código.
+  const isNewCommentEmpty = newCommentText.length === 0;
 
   return (
     <article className={styles.post}>
@@ -79,10 +87,13 @@ export function Post({ author, content, publishedAt }) {
           onChange={handleNewCommentChange}
           name="comment"
           placeholder="Deixe um comentário"
+          onInvalid={handleNewCommentinvalid}
           required
         />
         <footer>
-          <button type="submit">Publicar</button>
+          <button disabled={isNewCommentEmpty} type="submit">
+            Publicar
+          </button>
         </footer>
       </form>
 
