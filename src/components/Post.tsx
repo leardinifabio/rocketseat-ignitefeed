@@ -4,9 +4,26 @@ import { format, formatDistanceToNow } from "date-fns";
 import ptbr from "date-fns/locale/pt-BR";
 import { Comment } from "./Comment";
 import { Avatar } from "./Avatar";
-import { useState } from "react";
+import { ChangeEvent, FormEvent, InvalidEvent, useState } from "react";
 
-export function Post({ author, content, publishedAt }) {
+interface Author {
+  avatarUrl: string;
+  name: string;
+  role: string;
+}
+
+interface Content {
+  type: string;
+  content: string;
+}
+
+interface PostProps {
+  author: Author;
+  content: Content[];
+  publishedAt: Date;
+}
+
+export function Post({ author, content, publishedAt }: PostProps) {
   //Conceito de Estado (useState). Monitora a variável e sinaliza para atualizar quando sofrer alteração.
   const [comments, setComments] = useState(["Post muito bacana! 👏👏"]);
   const [newCommentText, setNewCommentText] = useState("");
@@ -24,23 +41,23 @@ export function Post({ author, content, publishedAt }) {
     addSuffix: true,
   });
 
-  function handleCreateNewComment() {
+  function handleCreateNewComment(event: FormEvent) {
     event.preventDefault();
     setComments([...comments, newCommentText]);
     setNewCommentText("");
   }
 
-  function handleNewCommentChange() {
+  function handleNewCommentChange(event: ChangeEvent<HTMLTextAreaElement>) {
     event.target.setCustomValidity("");
     setNewCommentText(event.target.value);
   }
 
-  function handleNewCommentinvalid() {
+  function handleNewCommentinvalid(event: InvalidEvent<HTMLTextAreaElement>) {
     event.target.setCustomValidity("Esse campo é obrigatório!");
   }
 
   //utilizando imutabilidade, retorna todos os comentários que forem diferente do 'commentToDelete' e cria uma nova lista; um novo valor da lista.
-  function deleteComment(commentToDelete) {
+  function deleteComment(commentToDelete: string) {
     const commentsWithoutDelete = comments.filter((comment) => {
       return comment !== commentToDelete;
     });
